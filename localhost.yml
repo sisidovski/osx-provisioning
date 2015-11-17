@@ -5,8 +5,8 @@
 
   vars:
     homebrew_taps:
-      - homebrew/cask
     homebrew_packages:
+      - { name: caskroom/cask/brew-cask }
       - { name: openssl }
       - { name: ant }
       - { name: chromedriver }
@@ -55,9 +55,9 @@
       - { name: kindle }
 
   tasks:
-    - name: add homeberew tap repositories
-      homebrew_tap: tap={{ item }} state=present
-      with_items: homebrew_taps
+    #- name: add homeberew tap repositories
+    #  homebrew_tap: tap={{ item }} state=present
+    #  with_items: homebrew_taps
 
     - name: update homebrew itself
       homebrew: update_homebrew=yes
@@ -85,7 +85,7 @@
       homebrew: name=brew-cask state=latest
 
     - name: install cask packages
-      homebrew_cask: name={{ item.name }} state={{ item.state | default('latest') }}
+      homebrew_cask: name={{ item.name }} state={{ item.state | default('present') }}
       with_items: homebrew_cask_packages
       register: cask_result
 
