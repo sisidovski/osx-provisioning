@@ -2,14 +2,97 @@
   connection: local
   gather_facts: no
   sudo: no
+
   vars:
     homebrew_taps:
       - homebrew/cask
     homebrew_packages:
       - { name: openssl }
+      - { name: ant }
+      - { name: chromedriver }
+      - { name: clisp }
+      - { name: colordiff }
+      - { name: git }
+      - { name: go }
+      - { name: jq }
+      - { name: lua }
+      - { name: node }
+      - { name: openconnect }
+      - { name: optipng }
+      - { name: the_silver_searcher }
+      - { name: tig }
+      - { name: tmux }
+      - { name: vim }
+      - { name: wget }
+      - { name: zsh }
     homebrew_cask_packages:
+      # browsers
+      - { name: google-chrome }
+      - { name: firefox }
+      # terminal
       - { name: iterm2 }
+      # editors
+      - { name: macvim }
+      - { name: atom }
+      - { name: intellij-idea }
+      # dev-tools
+      - { name: chrome-devtools }
+      - { name: genymotion }
+      - { name: sequel-pro }
+      - { name: sourcetree }
+      - { name: virtualbox }
+      # chat
+      - { name: slack }
+      - { name: limechat }
+      # tools
+      - { name: google-japanese-ime }
+      - { name: bettertouchtool }
+      - { name: karabiner }
+      - { name: alfred }
+      - { name: imageoptim }
+      - { name: licecap }
+      - { name: omnidisksweeper }
+      - { name: kindle }
+
   tasks:
     - name: add homeberew tap repositories
       homebrew_tap: tap={{ item }} state=present
       with_items: homebrew_taps
+
+    - name: update homebrew itself
+      homebrew: update_homebrew=yes
+
+    - name: install packages
+      homebrew: >
+        name={{ item.name }}
+        state={{ item.state | default('latest') }}
+        install_options={{
+          item.install_options | default() | join(',')
+          if item.install_options is not string
+          else item.install_options
+        }}
+      with_items: homebrew_packages
+      register: brew_result
+
+    - name: create a directory for save brew info
+      file: path=brew_info state=directory
+
+    - name: save some brew info
+      shell: brew info {{ item }} > brew_info/{{ item }}
+      with_items: brew_result.results | selectattr('changed') | map(attribute='item') | map(attribute='name') | list
+
+    - name: install homebrew-cask
+      homebrew: name=brew-cask state=latest
+
+    - name: install cask packages
+      homebrew_cask: name={{ item.name }} state={{ item.state | default('latest') }}
+      with_items: homebrew_cask_packages
+      register: cask_result
+
+    - name: create a directory for save cask info
+      file: path=cask_info state=directory
+
+    - name: save some cask info
+      shell: brew cask info {{ item }} > cask_info/{{ item }}
+      with_items: cask_result.results | selectattr('changed') | map(attribute='item') | map(attribute='name') | list
+
