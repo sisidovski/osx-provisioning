@@ -41,6 +41,7 @@
       - { name: sequel-pro }
       - { name: sourcetree }
       - { name: virtualbox }
+      - { name: vagrant }
       # chat
       - { name: slack }
       - { name: limechat }
