@@ -22,7 +22,8 @@
       - { name: the_silver_searcher }
       - { name: tig }
       - { name: tmux }
-      - { name: vim }
+      - { name: vim, install_options: with-lua }
+      - { name: macvim, install_options: with-lua }
       - { name: wget }
       - { name: zsh }
     homebrew_cask_packages:
@@ -32,7 +33,6 @@
       # terminal
       - { name: iterm2 }
       # editors
-      - { name: macvim }
       - { name: atom }
       - { name: intellij-idea }
       # dev-tools
