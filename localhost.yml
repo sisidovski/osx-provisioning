@@ -54,6 +54,7 @@
       - { name: licecap }
       - { name: omnidisksweeper }
       - { name: kindle }
+      - { name: thunderbird }
 
   tasks:
     #- name: add homeberew tap repositories
