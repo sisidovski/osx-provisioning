@@ -26,6 +26,7 @@
       - { name: macvim, install_options: with-lua }
       - { name: wget }
       - { name: zsh }
+      - { name: pwgen }
     homebrew_cask_packages:
       # browsers
       - { name: google-chrome }
