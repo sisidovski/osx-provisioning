@@ -5,6 +5,7 @@
 
   vars:
     homebrew_taps:
+      - { name: josegonzalez/homebrew-php }
     homebrew_packages:
       - { name: caskroom/cask/brew-cask }
       - { name: openssl }
@@ -43,6 +44,7 @@
       - { name: sourcetree }
       - { name: virtualbox }
       - { name: vagrant }
+      - { name: dockertoolbox }
       # chat
       - { name: slack }
       - { name: limechat }
@@ -58,9 +60,9 @@
       - { name: thunderbird }
 
   tasks:
-    #- name: add homeberew tap repositories
-    #  homebrew_tap: tap={{ item }} state=present
-    #  with_items: homebrew_taps
+    - name: add homeberew tap repositories
+      homebrew_tap: tap={{ item }} state=present
+      with_items: homebrew_taps
 
     - name: update homebrew itself
       homebrew: update_homebrew=yes
