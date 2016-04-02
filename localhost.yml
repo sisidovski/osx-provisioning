@@ -4,10 +4,9 @@
   sudo: no
 
   vars:
-    homebrew_taps:
-      - { name: josegonzalez/homebrew-php }
+    #homebrew_taps:
+    #  - { name: josegonzalez/homebrew-php }
     homebrew_packages:
-      - { name: caskroom/cask/brew-cask }
       - { name: openssl }
       - { name: ant }
       - { name: chromedriver }
@@ -60,9 +59,9 @@
       - { name: thunderbird }
 
   tasks:
-    - name: add homeberew tap repositories
-      homebrew_tap: tap={{ item }} state=present
-      with_items: homebrew_taps
+    # - name: add homeberew tap repositories
+    #   homebrew_tap: tap={{ item }} state=present
+    #   with_items: homebrew_taps
 
     - name: update homebrew itself
       homebrew: update_homebrew=yes

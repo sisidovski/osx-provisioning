@@ -9,6 +9,7 @@ brew update
 
 brew install python
 brew install ansible
+brew tap caskroom/cask
 
 if [ -e ~/.osx-provisioning ]; then
   mkdir ~/.osx-provisioning
